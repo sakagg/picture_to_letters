@@ -1,0 +1,122 @@
+<html>
+<head>
+	<title>Convert Picture to letters!</title>
+</head>
+<body>
+	<canvas id="MainCanvas" width="800px" height="500px" style="border: 2px solid #999999">
+		Your Browser does not support CANVAS(HTML5)!!
+	</canvas>
+
+	<canvas id="letters_canvas" style="border: 2px solid #999999; margin-left: 100px">
+	</canvas> 
+	<br />
+	<br />
+	Select The File You Want to Convert: 
+	<input type="file" id="image_link" />
+	<br />
+	<input type="text" id="name" />
+	<br />
+	<button id="uploader">UPLOAD!!</button>
+</body>
+<script>
+
+var can, ctx, img_link, can2, ctx2, font_style, imgdata, w;
+var letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+function main()
+{
+	can = document.getElementById("MainCanvas");
+	ctx = can.getContext("2d");
+	can2 = document.getElementById("letters_canvas");
+	ctx2 = can2.getContext("2d");
+	font_style = "Ubuntu Bold";
+}
+
+function get_pixel(x, y)
+{
+//	console.log(imgdata);
+//	var c = imgdata.subarray((w*y + x)*4, (w*y + x)*4 + 3);
+//	console.log(c);
+//	var c = ctx.getImageData(x, y, 1, 1);
+	var c = imgdata.subarray(4*x, 4*x+3);
+//	return ((c[0] << 16) | (c[1] << 8) | c[2]).toString(16);
+	var co = "rgba(" + c[0] + "," + c[1] + "," + c[2] + ", 1)";
+//	console.log(co);
+	return co;
+}
+
+var ind = -1;
+
+function get_next_letter()
+{
+	ind = (ind+1)%letters.length;
+	return letters[ind];
+}
+
+function just_do_it()
+{
+//	imgdata = ctx.getImageData(0, 0, can.width, can.height).data;
+	var font_size = 9;
+	var inc = Math.floor(font_size*0.8);
+	ctx2.font = font_size + "px " + font_style;
+	for(var i = 0; i<=can.height; i+=inc)
+	{
+		imgdata = ctx.getImageData(0, i, can.width, 1).data;
+		for(var j = 0; j<=can.width; j+=inc)
+		{
+			ctx2.fillStyle = get_pixel(j, i);
+	//		console.log(ctx2.fillStyle);
+			var c = get_next_letter();
+	//		console.log(c);
+	//		console.log(c, j, i);
+			ctx2.fillText(c, j, i);		
+		}
+		ind = -1;
+	}
+/*	var i = 0;
+	var recurse;
+	function draw_it()
+	{
+		imgdata = ctx.getImageData(0, i, can.width, 1).data;
+		for(var j = 0; j<=can.width; j+=inc)
+		{
+			ctx2.fillStyle = get_pixel(j, i);
+	//		console.log(ctx2.fillStyle);
+			var c = get_next_letter();
+	//		console.log(c);
+	//		console.log(c, j, i);
+			ctx2.fillText(c, j, i);		
+		}
+		i+=inc;
+		if(i>can.height)
+			clearInterval(recurse);
+	}
+	recurse = setInterval(draw_it, 10);
+*/}
+
+function upload_image(e)
+{
+	img_link = document.getElementById("image_link");
+	var name = document.getElementById("name").value;
+	if(name.length)
+		letters = name + "";
+//	console.log(img_link);
+	var reader = new FileReader();
+	reader.onload = function(event)
+	{
+		var img = new Image();
+		img.src = event.target.result;
+		w = can2.width = can.width = img.width;
+		can2.height = can.height = img.height;
+		ctx.drawImage(img, 0, 0);
+		just_do_it();
+	}
+	reader.readAsDataURL(img_link.files[0]);
+}
+
+main();
+//document.addEventListener("load", main);
+document.getElementById("uploader").addEventListener("click", upload_image);
+
+</script>
+</html>
