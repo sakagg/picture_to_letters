@@ -2,23 +2,26 @@
 <head>
 	<title>AlphaPic!</title> 
 </head>
-<body>
-	<canvas id="MainCanvas" width="400px" height="250px" style="border: 2px solid #999999">
+<body background="back.jpg" style="background-repeat: no-repeat; text-align:center; margin-top:8%; background-size:100% 100%; ">
+<h1 style="text-align:center">AlphaPic!</h1>
+	<div style="margin:auto; display:block;">
+	<canvas id="MainCanvas" width="400px" height="250px" style="border: 2px solid #999999;">
 		Your Browser does not support CANVAS(HTML5)!!
 	</canvas>
 
 	<canvas id="letters_canvas" width="400px" height="250px" style="border: 2px solid #999999; margin-left: 100px"> 
 	</canvas> 
+	</div>
 	<br />
 	<br />
-	Select The File You Want to Convert: 
+	<h2>Select The File You Want to Convert: </h2>
 	<input type="file" id="image_link" />
 	<br />
 	<br><br><br>
-	What text do you want inside 
+	<h2>What text do you want inside </h2>
 		<br>
 	<input type="text" id="name" />
-	<br />
+	<br /><br>
 	<button id="uploader">UPLOAD!!</button>
 </body>
 <script>
