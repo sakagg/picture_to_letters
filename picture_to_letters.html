@@ -1,8 +1,9 @@
 <html>
 <head>
-	<title>AlphaPic!</title> 
+	<title>AlphaPic!</title>
+	   <link rel="stylesheet" href="button.css"> 
 </head>
-<body background="back.jpg" style="background-repeat: no-repeat; text-align:center; margin-top:8%; background-size:100% 100%; ">
+<body background="back.jpg" style="background-repeat: no-repeat; text-align:center; margin-top:3%; background-size:100% 100%; ">
 <h1 style="text-align:center">AlphaPic!</h1>
 	<div style="margin:auto; display:block;">
 	<canvas id="MainCanvas" width="400px" height="250px" style="border: 2px solid #999999;">
@@ -15,14 +16,14 @@
 	<br />
 	<br />
 	<h2>Select The File You Want to Convert: </h2>
-	<input type="file" id="image_link" />
+	<input type="file" id="image_link" class="myButton" />
 	<br />
 	<br><br><br>
 	<h2>What text do you want inside </h2>
 		<br>
 	<input type="text" id="name" />
 	<br /><br>
-	<button id="uploader">UPLOAD!!</button>
+	<button id="uploader" class="myButton">UPLOAD!!</button>
 </body>
 <script>
 
@@ -73,6 +74,8 @@ function just_do_it()
 			ctx2.fillStyle = get_pixel(j, i);
 	//		console.log(ctx2.fillStyle);
 			var c = get_next_letter();
+	//		console.log(c);
+	//		console.log(c, j, i);
 			ctx2.fillText(c, j, i);		
 		}
 		ind = -1;
